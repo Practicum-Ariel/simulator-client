@@ -21,7 +21,7 @@ export default function LiveSimulatorForm({ generators, sensorsTypes, scenarios,
         console.log(userScenario)
 
         const numOfEvents = (+userScenario.durationInMinutes * 60) / +userScenario.intervalInSeconds
-        const scenarioId = axios.post('http://localhost:2700/live/start', {sensorType: userScenario.sensorType, numOfEvents, scenario: userScenario.scenario, interval: userScenario.intervalInSeconds}).then(res => {
+        const scenarioId = axios.post('http://localhost:2700/live/start', { sensorType: userScenario.sensorType, numOfEvents, scenario: userScenario.scenario, interval: userScenario.intervalInSeconds }).then(res => {
             console.log(res.data)
             setScenarioId(res.data)
             if (res.data) handleSuccessMessage('live')
@@ -34,7 +34,6 @@ export default function LiveSimulatorForm({ generators, sensorsTypes, scenarios,
 
     return (
         <section className='live-simulator'>
-            <h1>Live simulator</h1>
             <form action="" onSubmit={handleSubmit}>
                 <label htmlFor="generator">Generator</label>
                 <select name="generator" id="generator" onChange={(e) => setUserScenario((prev) => ({ ...prev, [e.target.name]: (e.target.value) }))}>
@@ -46,13 +45,15 @@ export default function LiveSimulatorForm({ generators, sensorsTypes, scenarios,
                     {Object.keys(sensorsTypes).map(st => <option value={st} key={st}>{st.charAt(0).toUpperCase() + st.slice(1)}</option>)}
                 </select>
 
-                <p>Sensors</p>
-                {sensorsTypes[userScenario.sensorType].map(sens => {
-                    return <div key={sens.toLowerCase()}>
-                        <Checkbox sens={sens.toLowerCase()} setSelectedSens={setSelectedSens} />
-                        <label htmlFor={sens.toLowerCase()} >{sens}</label>
-                    </div>
-                })}
+                <label>Sensors</label>
+                <div className="sensors">
+                    {sensorsTypes[userScenario.sensorType].map(sens => {
+                        return <div key={sens.toLowerCase()}>
+                            <Checkbox sens={sens.toLowerCase()} setSelectedSens={setSelectedSens} />
+                            <label htmlFor={sens.toLowerCase()} >{sens}</label>
+                        </div>
+                    })}
+                </div>
 
 
                 <label htmlFor="scenario">Scenario</label>
@@ -60,11 +61,15 @@ export default function LiveSimulatorForm({ generators, sensorsTypes, scenarios,
                     {scenarios.map(sc => <option value={sc.toLowerCase()} key={sc.toLowerCase()}>{sc}</option>)}
                 </select>
 
-                <label htmlFor="durationInMinutes">Duration (minutes)</label>
-                <input type="number" name="durationInMinutes" id="durationInMinutes" min='1' max='60' value={userScenario.durationInMinutes} onInput={(e) => setUserScenario((prev) => ({ ...prev, [e.target.name]: e.target.value }))} />
+                <div className="duration">
+                    <label htmlFor="durationInMinutes">Duration (minutes)</label>
+                    <input type="number" name="durationInMinutes" id="durationInMinutes" min='1' max='60' value={userScenario.durationInMinutes} onInput={(e) => setUserScenario((prev) => ({ ...prev, [e.target.name]: e.target.value }))} />
+                </div>
 
-                <label htmlFor="intervalInSeconds">Interval (seconds)</label>
-                <input type="number" name="intervalInSeconds" id="intervalInSeconds" min='1' max='60' value={userScenario.intervalInSeconds} onInput={(e) => setUserScenario((prev) => ({ ...prev, [e.target.name]: e.target.value }))} />
+                <div className="interval">
+                    <label htmlFor="intervalInSeconds">Interval (seconds)</label>
+                    <input type="number" name="intervalInSeconds" id="intervalInSeconds" min='1' max='60' value={userScenario.intervalInSeconds} onInput={(e) => setUserScenario((prev) => ({ ...prev, [e.target.name]: e.target.value }))} />
+                </div>
 
                 <button type='submit'>Display</button>
             </form>
