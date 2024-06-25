@@ -18,11 +18,9 @@ export default function LiveSimulatorForm({ generators, sensorsTypes, scenarios,
             alert('Choose at least one sensor for Live Simulator')
             return
         }
-        console.log(userScenario)
 
         const numOfEvents = (+userScenario.durationInMinutes * 60) / +userScenario.intervalInSeconds
         const scenarioId = axios.post('http://localhost:2700/live/start', { sensorType: userScenario.sensorType, numOfEvents, scenario: userScenario.scenario, interval: userScenario.intervalInSeconds }).then(res => {
-            console.log(res.data)
             setScenarioId(res.data)
             if (res.data) handleSuccessMessage('live')
         })

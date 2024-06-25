@@ -4,7 +4,7 @@ import { useState } from 'react'
 export default function LiveSuccess({scenarioId}) {
     const [isSimulatorRun, setIsSimulatorRun] = useState(true)
     const handleEndLive = () => {
-        axios.post('http://localhost:2700/live/stop', {scenarioId}).then(res => console.log(res.data))
+        axios.post('http://localhost:2700/live/stop', {scenarioId})
         setIsSimulatorRun(false)
     }
 

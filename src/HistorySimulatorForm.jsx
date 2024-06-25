@@ -13,8 +13,6 @@ export default function HistorySimulatorForm({ generators, sensorsTypes, scenari
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        console.log(userScenario)
-        // axios request
         handleSuccessMessage('history')
     }
 
