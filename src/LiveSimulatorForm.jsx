@@ -3,6 +3,9 @@ import Checkbox from './Checkbox'
 import axios from 'axios'
 
 export default function LiveSimulatorForm({ generators, sensorsTypes, scenarios, handleSuccessMessage, setScenarioId }) {
+
+    const apiUrl = import.meta.env.VITE_SERVER_URL
+
     const [userScenario, setUserScenario] = useState({
         generator: '1',
         sensorType: 'temperature',
@@ -20,7 +23,7 @@ export default function LiveSimulatorForm({ generators, sensorsTypes, scenarios,
         }
 
         const numOfEvents = (+userScenario.durationInMinutes * 60) / +userScenario.intervalInSeconds
-        const scenarioId = axios.post('http://localhost:2700/live/start', { sensorType: userScenario.sensorType, numOfEvents, scenario: userScenario.scenario, interval: userScenario.intervalInSeconds }).then(res => {
+        const scenarioId = axios.post(`${apiUrl}/live/start`, { sensorType: userScenario.sensorType, numOfEvents, scenario: userScenario.scenario, interval: userScenario.intervalInSeconds }).then(res => {
             setScenarioId(res.data)
             if (res.data) handleSuccessMessage('live')
         })

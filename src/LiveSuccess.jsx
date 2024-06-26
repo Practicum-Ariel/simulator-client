@@ -2,9 +2,11 @@ import axios from 'axios'
 import { useState } from 'react'
 
 export default function LiveSuccess({scenarioId}) {
+    const apiUrl = import.meta.env.VITE_SERVER_URL
+
     const [isSimulatorRun, setIsSimulatorRun] = useState(true)
     const handleEndLive = () => {
-        axios.post('http://localhost:2700/live/stop', {scenarioId})
+        axios.post(`${apiUrl}/live/stop`, {scenarioId})
         setIsSimulatorRun(false)
     }
 
