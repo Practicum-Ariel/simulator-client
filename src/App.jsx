@@ -20,7 +20,7 @@ export default function App() {
     'sound': ['S1', 'S2', 'S3', 'S4']
   }
 
-  const scenarios = ['Normal', 'Mild', 'Moderate', 'Severe']
+  const scenarios = ['normal', 'mild', 'moderate', 'severe']
 
   const chooseSimulator = (simulatorType) => {
     if (simulatorType === 'history') {

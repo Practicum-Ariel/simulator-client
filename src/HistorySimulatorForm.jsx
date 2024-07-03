@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import capitalizeFirstLetter from './helpers'
 
 
 export default function HistorySimulatorForm({ generators, sensorsTypes, scenarios, handleSuccessMessage }) {
@@ -13,6 +14,7 @@ export default function HistorySimulatorForm({ generators, sensorsTypes, scenari
 
     const handleSubmit = (e) => {
         e.preventDefault()
+        console.log(userScenario)
         handleSuccessMessage('history')
     }
 
@@ -26,17 +28,17 @@ export default function HistorySimulatorForm({ generators, sensorsTypes, scenari
 
                 <label htmlFor="sensorType">Sensor Type</label>
                 <select name="sensorType" id="sensorType" onChange={(e) => setUserScenario((prev) => ({ ...prev, [e.target.name]: e.target.value }))} >
-                    {Object.keys(sensorsTypes).map(st => <option value={st} key={st}>{st.charAt(0).toUpperCase() + st.slice(1)}</option>)}
+                    {Object.keys(sensorsTypes).map(st => <option value={st} key={st}>{capitalizeFirstLetter(st)}</option>)}
                 </select>
 
                 <label htmlFor="scenario">Scenario</label>
                 <select name="scenario" id="scenario" onChange={(e) => setUserScenario((prev) => ({ ...prev, [e.target.name]: e.target.value }))} >
-                    {scenarios.map(sc => <option value={sc.toLowerCase()} key={sc.toLowerCase()}>{sc}</option>)}
+                    {scenarios.map(sc => <option value={sc.toLowerCase()} key={sc.toLowerCase()}>{capitalizeFirstLetter(sc)}</option>)}
                 </select>
 
                 <label htmlFor="time">Time</label>
                 <select name="time" id="time" onChange={(e) => setUserScenario((prev) => ({ ...prev, [e.target.name]: e.target.value }))} >
-                    {timeOptions.map(time => <option value={time} key={time}>{time.charAt(0).toUpperCase() + time.slice(1)}</option>)}
+                    {timeOptions.map(time => <option value={time} key={time}>{capitalizeFirstLetter(time)}</option>)}
                 </select>
 
                 <button type='submit'>Display</button>

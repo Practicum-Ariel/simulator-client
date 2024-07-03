@@ -31,27 +31,8 @@ form {
   font-size: 0.8rem;
   width: 315px;
 
-  select {
-    padding: 0.625rem;
-    border-radius: 0.5rem;
-    margin-block-end: 1.2rem;
-    width: 100%;
-    background-color: #f9fafb;
-    border: 1px solid #d0d0d0;
-    cursor: pointer;
-  }
 
-  select:focus {
-    border: 1px solid var(--secondary-color-light);
-  }
-
-  label {
-    color: var(--main-color);
-    margin-block-end: 0.5rem;
-    align-self: start;
-  }
-
-  .sensors {
+  /* .sensors {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -70,9 +51,9 @@ form {
 
   .sensors label {
     margin-block-end: 0;
-  }
+  } */
 
-  input[type="checkbox"] {
+  /* input[type="checkbox"] {
     height: 15px;
     width: 15px;
     margin-inline-end: 0.5rem;
@@ -80,9 +61,41 @@ form {
     background-color: #f9fafb;
     border-radius: 0.2rem;
     border: 1px solid #d0d0d0;
-  }
+  } */
+}
 
-  .interval,
+select {
+  padding: 0.625rem;
+  border-radius: 0.5rem;
+  margin-block-end: 1.2rem;
+  width: 100%;
+  background-color: #f9fafb;
+  border: 1px solid #d0d0d0;
+  cursor: pointer;
+}
+
+select:focus {
+  border: 1px solid var(--secondary-color-light);
+}
+
+label {
+  color: var(--main-color);
+  margin-block-end: 0.5rem; 
+  align-self: start;
+}
+
+.sensors-scenarios {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.scenario p {
+  color: var(--main-color);
+  margin-block-end: 0.5rem; 
+}
+
+.interval,
   .duration {
     display: flex;
     flex-direction: row;
@@ -97,7 +110,7 @@ form {
       margin-block-end: 0;
       align-self: center;
     }
-    
+
     input[type="number"] {
       padding: 0.625rem;
       border-radius: 0.5rem;
@@ -111,7 +124,6 @@ form {
       border: 1px solid var(--secondary-color-light);
     }
   }
-}
 
 :root {
   --main-color: rgb(0, 0, 0);
@@ -147,14 +159,15 @@ form {
   }
 }
 
-.live-success, history-success {
+.live-success,
+history-success {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: start;
   gap: 2rem;
   margin-block-start: 2rem;
-  
+
   span {
     font-weight: 600;
     margin-inline-end: 0.5rem;

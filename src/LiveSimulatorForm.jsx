@@ -1,6 +1,7 @@
 import { useState } from 'react'
-import Checkbox from './Checkbox'
+// import Checkbox from './Checkbox'
 import axios from 'axios'
+import capitalizeFirstLetter from './helpers'
 
 export default function LiveSimulatorForm({ generators, sensorsTypes, scenarios, handleSuccessMessage, setScenarioId }) {
 
@@ -8,19 +9,22 @@ export default function LiveSimulatorForm({ generators, sensorsTypes, scenarios,
 
     const [userScenario, setUserScenario] = useState({
         generator: '1',
-        sensorType: 'temperature',
-        sensors: [],
-        scenario: 'normal',
+        temperature: 'normal',
+        vibration: 'normal',
+        sound: 'normal',
+        // sensors: [],
+        // scenario: 'normal',
         durationInMinutes: '1',
         intervalInSeconds: '1'
     })
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        if (userScenario.sensors.length === 0) {
-            alert('Choose at least one sensor for Live Simulator')
-            return
-        }
+        console.log(userScenario)
+        // if (userScenario.sensors.length === 0) {
+        //     alert('Choose at least one sensor for Live Simulator')
+        //     return
+        // }
 
         const numOfEvents = (+userScenario.durationInMinutes * 60) / +userScenario.intervalInSeconds
         const scenarioId = axios.post(`${apiUrl}/live/start`, { sensorType: userScenario.sensorType, numOfEvents, scenario: userScenario.scenario, interval: userScenario.intervalInSeconds }).then(res => {
@@ -29,9 +33,9 @@ export default function LiveSimulatorForm({ generators, sensorsTypes, scenarios,
         })
     }
 
-    const setSelectedSens = (sens) => {
-        setUserScenario((prev) => ({ ...prev, sensors: [...prev.sensors, sens] }))
-    }
+    // const setSelectedSens = (sens) => {
+    //     setUserScenario((prev) => ({ ...prev, sensors: [...prev.sensors, sens] }))
+    // }
 
     return (
         <section className='live-simulator'>
@@ -41,12 +45,23 @@ export default function LiveSimulatorForm({ generators, sensorsTypes, scenarios,
                     {generators.map(gen => <option value={gen.id} key={gen.id}>{gen.name}</option>)}
                 </select>
 
-                <label htmlFor="sensorType">Sensor Type</label>
+                {/* <label htmlFor="scenarios">Scenario per sensor type</label> */}
+                <section className="sensors-scenarios">
+                    {Object.keys(sensorsTypes).map(st =>
+                        <div className='scenario' key={st}>
+                            <p htmlFor={st}>{capitalizeFirstLetter(st)}</p>
+                            <select name={st} id={st} value={userScenario[st]} onChange={(e) => setUserScenario(prev => ({ ...prev, [e.target.name]: e.target.value }))}>
+                                {scenarios.map(sc => <option key={sc}>{capitalizeFirstLetter(sc)}</option>)}
+                            </select>
+                        </div>)}
+                </section>
+
+                {/* <label htmlFor="sensorType">Sensor Type</label>
                 <select name="sensorType" id="sensorType" onChange={(e) => setUserScenario((prev) => ({ ...prev, [e.target.name]: e.target.value, sensors: [] }))} >
                     {Object.keys(sensorsTypes).map(st => <option value={st} key={st}>{st.charAt(0).toUpperCase() + st.slice(1)}</option>)}
-                </select>
+                </select> */}
 
-                <label>Sensors</label>
+                {/* <label>Sensors</label>
                 <div className="sensors">
                     {sensorsTypes[userScenario.sensorType].map(sens => {
                         return <div key={sens.toLowerCase()}>
@@ -54,13 +69,13 @@ export default function LiveSimulatorForm({ generators, sensorsTypes, scenarios,
                             <label htmlFor={sens.toLowerCase()} >{sens}</label>
                         </div>
                     })}
-                </div>
+                </div> */}
 
 
-                <label htmlFor="scenario">Scenario</label>
+                {/* <label htmlFor="scenario">Scenario</label>
                 <select name="scenario" id="scenario" onChange={(e) => setUserScenario((prev) => ({ ...prev, [e.target.name]: e.target.value }))} >
                     {scenarios.map(sc => <option value={sc.toLowerCase()} key={sc.toLowerCase()}>{sc}</option>)}
-                </select>
+                </select> */}
 
                 <div className="duration">
                     <label htmlFor="durationInMinutes">Duration (minutes)</label>
