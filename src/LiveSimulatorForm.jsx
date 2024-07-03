@@ -14,8 +14,8 @@ export default function LiveSimulatorForm({ generators, sensorsTypes, scenarios,
         sound: 'normal',
         // sensors: [],
         // scenario: 'normal',
-        durationInMinutes: '1',
-        intervalInSeconds: '1'
+        durationInMinutes: 1,
+        intervalInSeconds: 1
     })
 
     const handleSubmit = (e) => {
@@ -26,8 +26,8 @@ export default function LiveSimulatorForm({ generators, sensorsTypes, scenarios,
         //     return
         // }
 
-        const numOfEvents = (+userScenario.durationInMinutes * 60) / +userScenario.intervalInSeconds
-        const scenarioId = axios.post(`${apiUrl}/live/start`, { sensorType: userScenario.sensorType, numOfEvents, scenario: userScenario.scenario, interval: userScenario.intervalInSeconds }).then(res => {
+        const numOfEvents = (userScenario.durationInMinutes * 60) / userScenario.intervalInSeconds
+        const scenarioId = axios.post(`${apiUrl}/live/start`, { temperature: userScenario.temperature, vibration: userScenario.vibration, sound: userScenario.sound, numOfEvents, interval: userScenario.intervalInSeconds }).then(res => {
             setScenarioId(res.data)
             if (res.data) handleSuccessMessage('live')
         })
@@ -50,7 +50,7 @@ export default function LiveSimulatorForm({ generators, sensorsTypes, scenarios,
                     {Object.keys(sensorsTypes).map(st =>
                         <div className='scenario' key={st}>
                             <p htmlFor={st}>{capitalizeFirstLetter(st)}</p>
-                            <select name={st} id={st} value={userScenario[st]} onChange={(e) => setUserScenario(prev => ({ ...prev, [e.target.name]: e.target.value }))}>
+                            <select name={st} id={st} value={userScenario[st]} onChange={(e) => setUserScenario(prev => ({ ...prev, [e.target.name]: e.target.value.toLowerCase() }))}>
                                 {scenarios.map(sc => <option key={sc}>{capitalizeFirstLetter(sc)}</option>)}
                             </select>
                         </div>)}
@@ -79,12 +79,12 @@ export default function LiveSimulatorForm({ generators, sensorsTypes, scenarios,
 
                 <div className="duration">
                     <label htmlFor="durationInMinutes">Duration (minutes)</label>
-                    <input type="number" name="durationInMinutes" id="durationInMinutes" min='1' max='60' value={userScenario.durationInMinutes} onInput={(e) => setUserScenario((prev) => ({ ...prev, [e.target.name]: e.target.value }))} />
+                    <input type="number" name="durationInMinutes" id="durationInMinutes" min='1' max='60' value={userScenario.durationInMinutes} onInput={(e) => setUserScenario((prev) => ({ ...prev, [e.target.name]: +e.target.value }))} />
                 </div>
 
                 <div className="interval">
                     <label htmlFor="intervalInSeconds">Interval (seconds)</label>
-                    <input type="number" name="intervalInSeconds" id="intervalInSeconds" min='1' max='60' value={userScenario.intervalInSeconds} onInput={(e) => setUserScenario((prev) => ({ ...prev, [e.target.name]: e.target.value }))} />
+                    <input type="number" name="intervalInSeconds" id="intervalInSeconds" min='1' max='60' value={userScenario.intervalInSeconds} onInput={(e) => setUserScenario((prev) => ({ ...prev, [e.target.name]: +e.target.value }))} />
                 </div>
 
                 <button type='submit'>Display</button>
