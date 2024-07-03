@@ -50,7 +50,7 @@ export default function LiveSimulatorForm({ generators, sensorsTypes, scenarios,
                     {Object.keys(sensorsTypes).map(st =>
                         <div className='scenario' key={st}>
                             <p htmlFor={st}>{capitalizeFirstLetter(st)}</p>
-                            <select name={st} id={st} value={userScenario[st]} onChange={(e) => setUserScenario(prev => ({ ...prev, [e.target.name]: e.target.value.toLowerCase() }))}>
+                            <select name={st} id={st} onChange={(e) => setUserScenario(prev => ({ ...prev, [e.target.name]: e.target.value.toLowerCase() }))}>
                                 {scenarios.map(sc => <option key={sc}>{capitalizeFirstLetter(sc)}</option>)}
                             </select>
                         </div>)}
